@@ -1,0 +1,136 @@
+ #
+ # Name: Vineet Agarwal
+ # USC ID: 6693187979
+ # Net ID: vpagarwa
+ # Course Number: EE 450
+ # Project: Socket Programming Project, Spring 2022
+ #
+
+
+For the Socket Programming Project, I have implemented the following:
+
+The details of the port numbers for my project as as follows:
+// UDP port numbers for connections between server M and server A, B and C
+SERVER_A_UDP_PORT 21979
+SERVER_B_UDP_PORT 22979
+SERVER_C_UDP_PORT 23979
+SERVER_M_UDP_PORT 24979 
+
+// Port numbers for TCP connections
+CLIENT_A_TCP_PORT 25979 
+CLIENT_B_TCP_PORT 26979
+
+The code files I have created for this project are:
+
+1.  serverM.cpp : 
+        This is the file created for the Main Server. 
+
+        The main server runs persistently, till the user terminates it.
+
+        The main server listens for and receives command entered by Client A and Client B.
+
+        It then identifies the command and then calls functions as needed to perform the task and communicate with 
+        the backend servers A, B and C.
+
+        It receives the transaction logs and length of transaction log (for a particular user or all logs) from 
+        servers A, B and C.
+
+        It returns the status of completion of the client request
+
+        REUSED CODE:
+        I have implemented the method - accept_client_sockets() in reference with the following link - https://stackoverflow.com/questions/15560336/listen-to-multiple-ports-from-one-server
+        I have modified the code for reading lines from a file from the following link - https://www.geeksforgeeks.org/stringstream-c-applications/
+        I have modified the code for sorting the vector that stores the logs received from the following link - https://www.geeksforgeeks.org/sorting-a-vector-in-c/
+
+
+2.  serverA.cpp : 
+        This is the file for the backend server A.
+
+        The server A runs persistently, till the user terminates it.
+
+        On bootup, the server reads the file "block1.txt" and creates 3 global unordered maps coinsFrom, coinsTo and coinCount to store details regarding the existing transactions.
+
+        The backend server receives the command from the Main Server.
+
+        It then proceeds to either check if the user(s) exist or to return the logs for either a particular user 
+        or for all users.
+
+        And returns logs if a user(s) exists or in case of all logs request, returns all logs.
+
+        In case of a request to add a transaction to the log file, it adds it to "block1.txt".
+
+        REUSED CODE:
+        I have modified the code from this site to split char* array by delimeter and save data into unordered maps - https://www.cplusplus.com/forum/beginner/56543/
+        I have modified the code from this site to create the pairs to add into the global maps - https://www.tutorialspoint.com/cpp_standard_library/cpp_utility_make_pair.htm
+
+
+2.  serverB.cpp : 
+        This is the file for the backend server B.
+
+        The server B runs persistently, till the user terminates it.
+
+        On bootup, the server reads the file "block2.txt" and creates 3 global unordered maps coinsFrom, coinsTo and coinCount to store details regarding the existing transactions.
+
+        The backend server receives the command from the Main Server.
+
+        It then proceeds to either check if the user(s) exist or to return the logs for either a particular user 
+        or for all users.
+
+        And returns logs if a user(s) exists or in case of all logs request, returns all logs.
+
+        In case of a request to add a transaction to the log file, it adds it to "block2.txt".
+
+        REUSED CODE:
+        I have modified the code from this site to split char* array by delimeter and save data into unordered maps - https://www.cplusplus.com/forum/beginner/56543/
+        I have modified the code from this site to create the pairs to add into the global maps - https://www.tutorialspoint.com/cpp_standard_library/cpp_utility_make_pair.htm
+
+2.  serverC.cpp : 
+        This is the file for the backend server C.
+
+        The server C runs persistently, till the user terminates it.
+
+        On bootup, the server reads the file "block3.txt" and creates 3 global unordered maps coinsFrom, coinsTo and coinCount to store details regarding the existing transactions.
+
+        The backend server receives the command from the Main Server.
+
+        It then proceeds to either check if the user(s) exist or to return the logs for either a particular user 
+        or for all users.
+
+        And returns logs if a user(s) exists or in case of all logs request, returns all logs.
+
+        In case of a request to add a transaction to the log file, it adds it to "block3.txt".
+
+        REUSED CODE:
+        I have modified the code from this site to split char* array by delimeter and save data into unordered maps - https://www.cplusplus.com/forum/beginner/56543/
+        I have modified the code from this site to create the pairs to add into the global maps - https://www.tutorialspoint.com/cpp_standard_library/cpp_utility_make_pair.htm
+
+
+5.  clientA.cpp : 
+        This is the file for the client A.
+
+        The client does not run persistently.
+
+        It can perform 3 operations: check current balance for user, log a transaction or request that an ordered file with all transactions be created.
+
+        It communicates with server M over TCP and receives status of transaction or current balance of the user and displays it on the terminal.
+
+
+6.  clientB.cpp : 
+        This is the file for the client B.
+
+        The client does not run persistently.
+
+        It can perform 3 operations: check current balance for user, log a transaction or request that an ordered file with all transactions be created.
+
+        It communicates with server M over TCP and receives status of transaction or current balance of the user and displays it on the terminal.
+
+
+7.  Makefile : It is used to compile all the above files and create the executables. 
+    
+    The following operations can be performed on the terminal to compile files because of the makefile
+    make all, make serverC, make serverT, make serverS, make serverP, make clientA and make clientB.
+    
+    The servers can then be booted up using the command ./server# where # is either A, B, C, or M. (All servers must be running for the program to work)
+    The clients can make requests by using the command ./client# where # is either A or B. (Any one client is enough to make the program run)
+
+Project Idiosyncrasy: The log files "block1.txt", "block2.txt" and "block3.txt" must not have an empty line at the end for the backend servers to run properly.
